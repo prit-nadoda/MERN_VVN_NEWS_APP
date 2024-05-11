@@ -7,6 +7,7 @@ import { connectDb } from "./database/db.js";
 import { static as expressStatic } from "express";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import newsRouter from "./routes/newsRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(
 );
 
 app.use("/api/v1/news", newsRouter);
+app.use("/api/v1/user", userRouter);
 
 connectDb();
 app.use(errorMiddleware);

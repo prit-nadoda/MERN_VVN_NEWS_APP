@@ -1,5 +1,5 @@
 class ErrorHandler extends Error {
-  constructor(statusCode, message) {
+  constructor(message, statusCode) {
     super(message);
     this.statusCode = statusCode;
   }
@@ -29,7 +29,7 @@ export const errorMiddleware = (err, req, res, next) => {
     err = new ErrorHandler(message, 400);
   }
 
-  const errMessage = err.errors
+  const errorMessage = err.errors
     ? Object.values(err.errors)
         .map((error) => error.message)
         .join(" ")
@@ -37,7 +37,7 @@ export const errorMiddleware = (err, req, res, next) => {
 
   return res.status(err.statusCode).json({
     success: false,
-    message: errMessage,
+    message: errorMessage,
   });
 };
 

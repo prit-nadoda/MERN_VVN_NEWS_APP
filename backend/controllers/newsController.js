@@ -1,6 +1,8 @@
 import NewsAPI from "newsapi";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import { SavedNews } from "../models/savedNewsModel.js";
+import { User } from "../models/userModel.js";
+import ErrorHandler from "../middlewares/errorMiddleware.js";
 
 export const getTodaysNews = catchAsyncErrors(async (req, res, next) => {
   const { category, country } = req.params;
@@ -50,13 +52,18 @@ export const saveNews = catchAsyncErrors(async (req, res, next) => {
     !content ||
     !savedBy
   ) {
-    return res.status(400).json({
-      status: "Article info. Missing",
-      message: "Please provide all the required article informnation",
-    });
+    return next(new ErrorHandler("The News is already saved!!", 400));
   }
 
-  const savedNewsExist = await SavedNews.find({
+  const userExist = await User.findOne({
+    _id: savedBy,
+  });
+
+  if (!userExist) {
+    return next(new ErrorHandler("The News is already saved!!", 400));
+  }
+
+  let savedNewsExist = await SavedNews.findOne({
     source: source,
     author: author,
     title: title,
@@ -67,9 +74,8 @@ export const saveNews = catchAsyncErrors(async (req, res, next) => {
     url: url,
   });
 
-  let savedNews;
-  if (!savedNewsExist.length > 0) {
-    savedNews = await SavedNews.create({
+  if (!savedNewsExist) {
+    savedNewsExist = await SavedNews.create({
       source: source,
       author: author,
       title: title,
@@ -78,11 +84,16 @@ export const saveNews = catchAsyncErrors(async (req, res, next) => {
       content: content,
       urlToImage: urlToImage,
       url: url,
+      savedBy: [],
     });
-  } else {
-    saveNews.savedBy.push(savedBy);
-    await saveNews.save();
   }
+
+  if (savedNewsExist.savedBy.includes(savedBy)) {
+    return next(new ErrorHandler("The News is already saved!!", 400));
+  }
+  savedNewsExist.savedBy.push(savedBy);
+  await savedNewsExist.save();
+
   res.status(201).json({
     status: "success",
     message: "News Saved Successfully",

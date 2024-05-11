@@ -39,6 +39,7 @@ const newsSchema = Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "users",
+      uniqe: true,
     },
   ],
 });

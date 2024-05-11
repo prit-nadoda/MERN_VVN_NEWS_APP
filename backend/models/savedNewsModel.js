@@ -27,6 +27,14 @@ const newsSchema = Schema({
     type: String,
     required: true,
   },
+  url: {
+    type: String,
+    required: true,
+  },
+  urlToImage: {
+    type: String,
+    required: true,
+  },
   savedBy: [
     {
       type: Schema.Types.ObjectId,

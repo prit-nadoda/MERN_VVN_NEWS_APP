@@ -6,8 +6,7 @@ import ErrorHandler from "../middlewares/errorMiddleware.js";
 
 export const getTodaysNews = catchAsyncErrors(async (req, res, next) => {
   const { category, country } = req.params;
-  console.log(category);
-  console.log(country);
+
   try {
     const newsapi = new NewsAPI(process.env.NEWS_API);
     const fetchedNews = await newsapi.v2.topHeadlines({

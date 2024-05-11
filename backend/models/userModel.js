@@ -19,13 +19,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: [4, "Fullname must consist atleast 4 characters!"],
-    maxlength: [25, "Fullname must consist atleast 4 characters!"],
+    maxlength: [25, "Fullname must consist maximum 25 characters!"],
   },
   password: {
     type: String,
     required: true,
     minlength: [6, "Password must consist atleast 6 characters!"],
-    maxlength: [25, "Password must consist atleast 25 characters!"],
+    maxlength: [20, "Password must consist maximum 25 characters!"],
   },
 });
 

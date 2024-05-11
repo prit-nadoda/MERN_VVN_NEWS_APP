@@ -1,4 +1,4 @@
-class ErroHandler extends Error {
+class ErrorHandler extends Error {
   constructor(statusCode, message) {
     super(message);
     this.statusCode = statusCode;
@@ -41,4 +41,4 @@ export const errorMiddleware = (err, req, res, next) => {
   });
 };
 
-export default ErroHandler;
+export default ErrorHandler;

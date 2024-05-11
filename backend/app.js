@@ -5,6 +5,8 @@ import cors from "cors";
 import fileUpload from "express-fileupload";
 import { connectDb } from "./database/db.js";
 import { static as expressStatic } from "express";
+import { errorMiddleware } from "./middlewares/errorMiddleware.js";
+import newsRouter from "./routes/newsRouter.js";
 
 const app = express();
 
@@ -31,5 +33,8 @@ app.use(
   })
 );
 
+app.use("/api/v1/news", newsRouter);
+
 connectDb();
+app.use(errorMiddleware);
 export default app;

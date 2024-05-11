@@ -2,6 +2,7 @@ import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import { User } from "../models/userModel.js";
 import { generateToken } from "../utils/jwt.js";
+import { SavedNews } from "../models/savedNewsModel.js";
 
 export const register = catchAsyncErrors(async (req, res, next) => {
   const { fullname, email, password, username } = req.body;
@@ -55,4 +56,17 @@ export const logout = catchAsyncErrors((req, res, next) => {
       success: true,
       message: "Logged out successfully!",
     });
+});
+
+export const getMySavedNews = catchAsyncErrors(async (req, res, next) => {
+  const MySavedNews = await SavedNews.find({
+    savedBy: req.user._id,
+  }).select("-savedBy");
+  MySavedNews && MySavedNews.length > 0
+    ? res.status(200).json({ success: true, articles: MySavedNews })
+    : res.status(200).json({
+        success: true,
+        message: "No Articles Saved Yet.",
+        articles: [],
+      });
 });

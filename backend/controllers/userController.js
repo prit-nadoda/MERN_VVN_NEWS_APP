@@ -43,3 +43,16 @@ export const login = catchAsyncErrors(async (req, res, next) => {
 
   generateToken(user, "You are logged in successfully!", 200, res);
 });
+
+export const logout = catchAsyncErrors((req, res, next) => {
+  res
+    .status(200)
+    .cookie("userToken", "", {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    })
+    .json({
+      success: true,
+      message: "Logged out successfully!",
+    });
+});

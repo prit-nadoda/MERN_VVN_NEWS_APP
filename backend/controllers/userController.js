@@ -70,3 +70,20 @@ export const getMySavedNews = catchAsyncErrors(async (req, res, next) => {
         articles: [],
       });
 });
+
+export const removeFromeSaved = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const isExist = await SavedNews.findById(id);
+  if (!isExist) {
+    return next(new ErrorHandler("Article does not exist!", 400));
+  }
+  if (!isExist.savedBy.includes(req.user._id)) {
+    return next(new ErrorHandler("Article is not saved by this user!", 400));
+  }
+  isExist.savedBy.pull(req.user._id);
+  await isExist.save();
+  res.status(200).json({
+    success: true,
+    message: "Article removed from saved successfully!",
+  });
+});

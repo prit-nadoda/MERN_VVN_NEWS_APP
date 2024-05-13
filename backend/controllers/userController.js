@@ -87,3 +87,12 @@ export const removeFromeSaved = catchAsyncErrors(async (req, res, next) => {
     message: "Article removed from saved successfully!",
   });
 });
+
+export const getUserInfo = catchAsyncErrors(async (req, res, next) => {
+  const user = req.user;
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});

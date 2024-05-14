@@ -19,7 +19,7 @@ const Footer = () => {
                   className="h-8"
                   alt="Flowbite Logo"
                 />
-                <span className="self-center text-2xl font-bold whitespace-nowrap dark:text-white">
+                <span className="self-center text-gray-900 text-2xl font-bold whitespace-nowrap dark:text-white">
                   VvNews
                 </span>
               </Link>

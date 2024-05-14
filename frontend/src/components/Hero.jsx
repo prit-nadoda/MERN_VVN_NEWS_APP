@@ -6,7 +6,7 @@ const Hero = () => {
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
         <a
           href="#"
-          className="shadow-inner inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-[#fcfcfc] rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+          className="shadow-inner inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-[#f9f9f9] rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
           role="alert"
         >
           <span className="text-xs bg-primary-600 rounded-full bg-blue-700 text-white px-4 py-1.5 mr-3">
@@ -33,7 +33,7 @@ const Hero = () => {
         </h1>
         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           want Top news of any category and of any country? why to wander
-          arround the internet? VvCare gives you the best experience to get
+          arround the internet? VvNews gives you the best experience to get
           latest news of 24 hours. we also give you to choose among different
           categories and countries.
         </p>

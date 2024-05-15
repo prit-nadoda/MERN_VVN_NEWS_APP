@@ -2,7 +2,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <section className="bg-[#faf4e4] dark:bg-gray-900 pt-[100px]">
+    <section className="bg-[#faf4e4] dark:bg-gray-900 pt-[100px] ">
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
         <a
           href="#"

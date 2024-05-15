@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useCountries } from "use-react-countries";
 import { IoBookmarksSharp } from "react-icons/io5";
+import { Context } from "../main";
+import { toast } from "react-toastify";
 
 const News = () => {
   const { countries } = useCountries();
@@ -10,7 +12,8 @@ const News = () => {
   const [category, setCategory] = useState("general");
   const [flag, setFlag] = useState("https://flagcdn.com/in.svg");
   const [news, setNews] = useState([]);
-
+  const { isAuthenticated } = useContext(Context);
+  const navigateTo = useNavigate();
   const categories = [
     "business",
     "entertainment",
@@ -21,8 +24,19 @@ const News = () => {
     "technology",
   ];
 
+  const saveHandle = async (e) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      toast.error("User is not authenticated!");
+      navigateTo("/login", () => {
+        toast.error("User is not authenticated!");
+      });
+    }
+    console.log("still executed");
+  };
+
   useEffect(() => {
-    if (countries.length === 0) return; // Ensure countries data is loaded
+    if (countries.length === 0) return;
 
     const conInfo = countries.find(
       (countryName) => countryName.name === country
@@ -123,7 +137,10 @@ const News = () => {
                     Read More
                   </button>
                 </Link>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                <button
+                  onClick={saveHandle}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                >
                   <IoBookmarksSharp size={24} />
                 </button>
               </div>

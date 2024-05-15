@@ -8,8 +8,11 @@ import Saved from "./pages/Saved";
 import Profile from "./pages/Profile";
 import { Context } from "./main";
 import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
+import { ToastContainer } from "react-toastify";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
@@ -37,6 +40,7 @@ const App = () => {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -46,6 +50,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
         </Routes>
         <Footer />
+        <ToastContainer position="top-center" />
       </Router>
     </>
   );

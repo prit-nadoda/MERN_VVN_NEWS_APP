@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../main";
 
 const Register = () => {
+  const { isAuthenticated, setIsAuthenticated, setActiveLink } =
+    useContext(Context);
+
+  useEffect(() => {
+    setActiveLink("");
+  });
   return (
     <section className="bg-[#faf4e4] pt-[40px] dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">

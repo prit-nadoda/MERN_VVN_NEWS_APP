@@ -40,16 +40,8 @@ export const saveNews = catchAsyncErrors(async (req, res, next) => {
     url,
   } = req.body;
 
-  if (
-    !source ||
-    !url ||
-    !urlToImage ||
-    !title ||
-    !description ||
-    !publishedAt ||
-    !savedBy
-  ) {
-    return next(new ErrorHandler("Please provide full article data!!", 400));
+  if (!title || !savedBy) {
+    return next(new ErrorHandler("Title or user ID is missing!!", 400));
   }
 
   const userExist = await User.findOne({
@@ -69,13 +61,13 @@ export const saveNews = catchAsyncErrors(async (req, res, next) => {
 
   if (!savedNewsExist) {
     savedNewsExist = await SavedNews.create({
-      source: source,
+      source: source ? source : null,
       author: author ? author : null,
       title: title,
-      description: description,
-      publishedAt: publishedAt,
+      description: description ? description : null,
+      publishedAt: publishedAt ? publishedAt : null,
       content: content ? content : null,
-      urlToImage: urlToImage,
+      urlToImage: urlToImage ? urlToImage : null,
       url: url,
       savedBy: [],
     });

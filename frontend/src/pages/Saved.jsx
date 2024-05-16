@@ -3,15 +3,18 @@ import { Context } from "../main";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { IoBookmarksSharp } from "react-icons/io5";
+import { RiUnpinFill } from "react-icons/ri";
 
 const Saved = () => {
-  const { isAuthenticated, user } = useContext(Context);
+  const { isAuthenticated, setActiveLink } = useContext(Context);
   const [savedArticles, setSavedArticles] = useState([]);
   const navigate = useNavigate();
   const [apiResponseData, setApiResponseData] = useState(null);
   const toastDisplayedRef = useRef(false); // Ref to track whether login toast has been displayed
 
+  useEffect(() => {
+    setActiveLink("about");
+  });
   useEffect(() => {
     if (!isAuthenticated) {
       if (!toastDisplayedRef.current) {
@@ -37,15 +40,31 @@ const Saved = () => {
     fetchData();
   }, [isAuthenticated, navigate]);
 
+  const handleUnsave = async (e, id) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/v1/user/savedNews/remove/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setSavedArticles(savedArticles.filter((article) => article._id !== id));
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <section className="w-vw pt-[140px] bg-[#f4f4e4] py-8">
       <div className="mx-auto  max-w-screen-xl px-4 space-y-8 sm:px-6 lg:px-8">
-        <div className="w-full py-11 shadow-xl p-5 gap-8 rounded-md flex flex-wrap justify-center items-center bg-[#f9f9f9]">
+        <div className="w-full py-11 shadow-xl p-5 gap-8 rounded-md flex flex-wrap justify-center align-center bg-[#f9f9f9]">
           {savedArticles.length > 0 ? (
             savedArticles.map((article, index) => (
               <div
                 key={index}
-                className="relative shadow-xl w-full max-w-sm bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                className="relative shadow-xl w-full max-w-md bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
                 <img
                   src={
@@ -68,8 +87,12 @@ const Saved = () => {
                       Read More
                     </button>
                   </Link>
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300">
-                    <IoBookmarksSharp size={24} />
+                  <button
+                    onClick={(e) => handleUnsave(e, article._id)}
+                    className="bg-blue-500 flex gap-1 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                  >
+                    <RiUnpinFill size={24} />
+                    Unsave
                   </button>
                 </div>
               </div>

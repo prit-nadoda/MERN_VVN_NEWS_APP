@@ -5,13 +5,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const [activeLink, setActiveLink] = useState("home");
+  // const [activeLink, setActiveLink] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
+  const { isAuthenticated, setIsAuthenticated, setActiveLink, activeLink } =
+    useContext(Context);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const navigateTo = useNavigate();
+
   const handleLinkClick = (link) => {
     setActiveLink(link);
     setIsMenuOpen(false);
@@ -121,6 +122,19 @@ const Navbar = () => {
                 } md:dark:text-blue-500 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`}
               >
                 Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/about"
+                onClick={() => handleLinkClick("about")}
+                className={`block py-2 px-3 rounded md:bg-transparent md:p-0 ${
+                  activeLink === "about"
+                    ? "text-blue-700"
+                    : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent"
+                } md:dark:text-blue-500 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`}
+              >
+                About
               </Link>
             </li>
             <li>

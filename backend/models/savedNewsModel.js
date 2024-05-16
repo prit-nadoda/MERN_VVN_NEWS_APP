@@ -3,11 +3,10 @@ import { Schema, model } from "mongoose";
 const newsSchema = Schema({
   source: {
     type: String,
-    required: true,
+    default: null,
   },
   author: {
     type: String,
-
     default: null,
   },
   title: {
@@ -17,25 +16,24 @@ const newsSchema = Schema({
   },
   description: {
     type: String,
-    required: true,
-    uniqe: true,
+    default: null,
   },
   publishedAt: {
     type: String,
-    required: true,
+    default: null,
   },
   content: {
     type: String,
-
     default: null,
   },
   url: {
     type: String,
     required: true,
+    default: null,
   },
   urlToImage: {
     type: String,
-    required: true,
+    default: null,
   },
   savedBy: [
     {

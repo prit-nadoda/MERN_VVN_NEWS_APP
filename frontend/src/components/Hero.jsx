@@ -1,11 +1,12 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+import { PiNewspaperFill } from "react-icons/pi";
 const Hero = () => {
   return (
-    <section className="bg-[#faf4e4] dark:bg-gray-900 pt-[100px] ">
-      <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+    <section className="bg-[#faf4e4] dark:bg-gray-900 pt-[150px]">
+      <div className="py-8 px-4  mb-[80px] mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
         <a
-          href="#"
+          href="#news"
           className="shadow-inner inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-[#f9f9f9] rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
           role="alert"
         >
@@ -38,8 +39,8 @@ const Hero = () => {
           categories and countries.
         </p>
         <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-          <a
-            href="#"
+          <Link
+            to={"/about"}
             className="inline-flex justify-center bg-blue-700 items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
           >
             Learn more
@@ -55,20 +56,13 @@ const Hero = () => {
                 clipRule="evenodd"
               ></path>
             </svg>
-          </a>
+          </Link>
           <a
-            href="#"
+            href="#news"
             className="shadow-inner inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
           >
-            <svg
-              className="mr-2 -ml-1 w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
-            </svg>
-            Watch video
+            <PiNewspaperFill className="mr-2" size={24} />
+            Watch News
           </a>
         </div>
         <div className="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36"></div>

@@ -1,11 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Context } from "../main";
 import axios from "axios";
 
 const Login = () => {
-  const { isAuthenticated, setIsAuthenticated } = useContext(Context);
+  const { isAuthenticated, setIsAuthenticated, setActiveLink } =
+    useContext(Context);
+
+  useEffect(() => {
+    setActiveLink("");
+  });
   const navigateTo = useNavigate();
   const [user, setUser] = useState({
     email: "",

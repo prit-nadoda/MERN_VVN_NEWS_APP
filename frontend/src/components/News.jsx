@@ -118,7 +118,10 @@ const News = () => {
   }, [country, category, countries]);
 
   return (
-    <div className="mx-auto overflow-hidden max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
+    <div
+      id="news"
+      className="mx-auto overflow-hidden max-w-screen-xl pt-[90px] space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8"
+    >
       <div className="w-full shadow-xl p-5 gap-8 rounded-md flex flex-wrap justify-center align-center bg-[#f9f9f9]">
         <h4 className="w-full font-bold text-center text-gray-900">
           Select Country and Category

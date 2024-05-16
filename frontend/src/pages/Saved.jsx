@@ -13,7 +13,7 @@ const Saved = () => {
   const toastDisplayedRef = useRef(false); // Ref to track whether login toast has been displayed
 
   useEffect(() => {
-    setActiveLink("about");
+    setActiveLink("saved");
   });
   useEffect(() => {
     if (!isAuthenticated) {
@@ -57,7 +57,7 @@ const Saved = () => {
   };
 
   return (
-    <section className="w-vw pt-[140px] bg-[#f4f4e4] py-8">
+    <section className="w-vw pt-[140px] bg-[#faf4e4] py-8 pb-[100px]">
       <div className="mx-auto  max-w-screen-xl px-4 space-y-8 sm:px-6 lg:px-8">
         <div className="w-full py-11 shadow-xl p-5 gap-8 rounded-md flex flex-wrap justify-center align-center bg-[#f9f9f9]">
           {savedArticles.length > 0 ? (
@@ -83,13 +83,13 @@ const Saved = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                    <button className="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">
                       Read More
                     </button>
                   </Link>
                   <button
                     onClick={(e) => handleUnsave(e, article._id)}
-                    className="bg-blue-500 flex gap-1 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                    className="bg-blue-700 flex gap-1 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300"
                   >
                     <RiUnpinFill size={24} />
                     Unsave
@@ -98,7 +98,7 @@ const Saved = () => {
               </div>
             ))
           ) : (
-            <p className="text-gray-500">No news available</p>
+            <p className="text-gray-500">No saved news available</p>
           )}
         </div>
       </div>

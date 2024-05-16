@@ -5,6 +5,7 @@ import { useCountries } from "use-react-countries";
 import { IoBookmarksSharp } from "react-icons/io5";
 import { Context } from "../main";
 import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const News = () => {
   const { countries } = useCountries();
@@ -12,17 +13,7 @@ const News = () => {
   const [category, setCategory] = useState("general");
   const [flag, setFlag] = useState("https://flagcdn.com/in.svg");
   const [news, setNews] = useState([]);
-  const [toSave, setToSave] = useState({
-    source: "",
-    author: "",
-    title: "",
-    description: "",
-    publishedAt: "",
-    content: "",
-    savedBy: "",
-    urlToImage: "",
-    url: "",
-  });
+  const [loading, setLoading] = useState(false);
   const { isAuthenticated, user } = useContext(Context);
 
   const navigateTo = useNavigate();
@@ -104,6 +95,7 @@ const News = () => {
         : "in";
 
       const fetchNews = async () => {
+        setLoading(true);
         try {
           const response = await axios.get(
             `http://localhost:4000/api/v1/news/latest/${countryCode}/${category}`
@@ -112,6 +104,7 @@ const News = () => {
         } catch (error) {
           console.log(error);
         }
+        setLoading(false);
       };
       fetchNews();
     }
@@ -169,6 +162,7 @@ const News = () => {
         </div>
       </div>
       <div className="w-full py-11 shadow-xl p-5 gap-8 rounded-md flex flex-wrap justify-center align-center bg-[#f9f9f9]">
+        {loading ? <Loader /> : ""}
         {news.length > 0 ? (
           news.map((article, index) => (
             <div
@@ -192,13 +186,13 @@ const News = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                  <button className="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">
                     Read More
                   </button>
                 </Link>
                 <button
                   onClick={(e) => saveHandle(e, article)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                  className="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300"
                 >
                   <IoBookmarksSharp size={24} />
                 </button>

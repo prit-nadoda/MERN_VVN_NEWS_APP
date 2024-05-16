@@ -20,6 +20,9 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        if (!isAuthenticated) {
+          return;
+        }
         const response = await axios.get(
           "http://localhost:4000/api/v1/user/info",
           {

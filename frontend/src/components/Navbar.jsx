@@ -23,7 +23,6 @@ const Navbar = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         toast.success(res.data.message);
         setIsAuthenticated(false);
       })
@@ -32,9 +31,7 @@ const Navbar = () => {
         toast.error(err.response.data.message);
       });
   };
-  const gotoLogin = () => {
-    navigateTo("/login");
-  };
+
   return (
     <nav className="bg-[#f9f9f9] shadow-xl dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 overflow-hidden">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -69,7 +66,7 @@ const Navbar = () => {
             </NavLink>
           ) : (
             <NavLink
-              to="/login"
+              to="/"
               className="flex items-center space-x-3 rtl:space-x-reverse"
             >
               <button

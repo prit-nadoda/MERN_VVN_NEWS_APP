@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCountries } from "use-react-countries";
 import { IoBookmarksSharp } from "react-icons/io5";
 import { Context } from "../main";
@@ -12,7 +12,19 @@ const News = () => {
   const [category, setCategory] = useState("general");
   const [flag, setFlag] = useState("https://flagcdn.com/in.svg");
   const [news, setNews] = useState([]);
-  const { isAuthenticated } = useContext(Context);
+  const [toSave, setToSave] = useState({
+    source: "",
+    author: "",
+    title: "",
+    description: "",
+    publishedAt: "",
+    content: "",
+    savedBy: "",
+    urlToImage: "",
+    url: "",
+  });
+  const { isAuthenticated, user } = useContext(Context);
+
   const navigateTo = useNavigate();
   const categories = [
     "business",
@@ -24,15 +36,59 @@ const News = () => {
     "technology",
   ];
 
-  const saveHandle = async (e) => {
+  const saveHandle = async (e, article) => {
     e.preventDefault();
+
     if (!isAuthenticated) {
       toast.error("User is not authenticated!");
       navigateTo("/login", () => {
         toast.error("User is not authenticated!");
       });
+
+      return;
     }
-    console.log("still executed");
+
+    const saveArticle = async () => {
+      const source = article.source?.name || "";
+      const {
+        author,
+        title,
+        description,
+        publishedAt,
+        content,
+        urlToImage,
+        url,
+      } = article;
+
+      const articleToSave = {
+        source,
+        author,
+        title,
+        description,
+        publishedAt,
+        content,
+        savedBy: user ? user._id : "",
+        urlToImage,
+        url,
+      };
+
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/api/v1/news/save",
+          articleToSave,
+          {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        toast.success(response.data.message);
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    };
+
+    saveArticle();
   };
 
   useEffect(() => {
@@ -109,7 +165,7 @@ const News = () => {
           </select>
         </div>
       </div>
-      <div className="w-full shadow-xl p-5 gap-8 rounded-md flex flex-wrap justify-center align-center bg-[#f9f9f9]">
+      <div className="w-full py-11 shadow-xl p-5 gap-8 rounded-md flex flex-wrap justify-center align-center bg-[#f9f9f9]">
         {news.length > 0 ? (
           news.map((article, index) => (
             <div
@@ -138,7 +194,7 @@ const News = () => {
                   </button>
                 </Link>
                 <button
-                  onClick={saveHandle}
+                  onClick={(e) => saveHandle(e, article)}
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
                 >
                   <IoBookmarksSharp size={24} />

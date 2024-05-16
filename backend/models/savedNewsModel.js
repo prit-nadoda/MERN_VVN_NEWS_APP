@@ -7,7 +7,8 @@ const newsSchema = Schema({
   },
   author: {
     type: String,
-    required: true,
+
+    default: null,
   },
   title: {
     type: String,
@@ -25,7 +26,8 @@ const newsSchema = Schema({
   },
   content: {
     type: String,
-    required: true,
+
+    default: null,
   },
   url: {
     type: String,

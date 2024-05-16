@@ -40,18 +40,18 @@ export const saveNews = catchAsyncErrors(async (req, res, next) => {
     url,
   } = req.body;
 
+  console.log(req.body);
+
   if (
     !source ||
-    !author ||
     !url ||
     !urlToImage ||
     !title ||
     !description ||
     !publishedAt ||
-    !content ||
     !savedBy
   ) {
-    return next(new ErrorHandler("The News is already saved!!", 400));
+    return next(new ErrorHandler("Please provide full article data!!", 400));
   }
 
   const userExist = await User.findOne({
@@ -59,28 +59,24 @@ export const saveNews = catchAsyncErrors(async (req, res, next) => {
   });
 
   if (!userExist) {
-    return next(new ErrorHandler("The News is already saved!!", 400));
+    return next(new ErrorHandler("User does not exist!!", 400));
   }
 
   let savedNewsExist = await SavedNews.findOne({
-    source: source,
-    author: author,
     title: title,
     description: description,
     publishedAt: publishedAt,
     content: content,
-    urlToImage: urlToImage,
-    url: url,
   });
 
   if (!savedNewsExist) {
     savedNewsExist = await SavedNews.create({
       source: source,
-      author: author,
+      author: author ? author : null,
       title: title,
       description: description,
       publishedAt: publishedAt,
-      content: content,
+      content: content ? content : null,
       urlToImage: urlToImage,
       url: url,
       savedBy: [],

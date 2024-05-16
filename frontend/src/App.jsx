@@ -29,7 +29,7 @@ const App = () => {
             withCredentials: true,
           }
         );
-        console.log(response.data);
+
         setIsAuthenticated(true);
         setUser(response.data.user);
       } catch (error) {

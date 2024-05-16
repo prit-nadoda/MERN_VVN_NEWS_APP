@@ -40,8 +40,6 @@ export const saveNews = catchAsyncErrors(async (req, res, next) => {
     url,
   } = req.body;
 
-  console.log(req.body);
-
   if (
     !source ||
     !url ||

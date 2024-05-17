@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { RiUnpinFill } from "react-icons/ri";
+import Loader from "../components/Loader";
 
 const Saved = () => {
   const { isAuthenticated, setActiveLink } = useContext(Context);
   const [savedArticles, setSavedArticles] = useState([]);
   const navigate = useNavigate();
   const [apiResponseData, setApiResponseData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const toastDisplayedRef = useRef(false); // Ref to track whether login toast has been displayed
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const Saved = () => {
     }
 
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           "http://localhost:4000/api/v1/user/savedNews",
@@ -35,6 +38,7 @@ const Saved = () => {
       } catch (error) {
         console.log(error.response.data.message);
       }
+      setLoading(false);
     };
 
     fetchData();
@@ -60,6 +64,7 @@ const Saved = () => {
     <section className="w-vw pt-[140px] bg-[#faf4e4] py-8 pb-[100px]">
       <div className="mx-auto  max-w-screen-xl px-4 space-y-8 sm:px-6 lg:px-8">
         <div className="w-full py-11 shadow-xl p-5 gap-8 rounded-md flex flex-wrap justify-center align-center bg-[#f9f9f9]">
+          {loading ? <Loader /> : ""}
           {savedArticles.length > 0 ? (
             savedArticles.map((article, index) => (
               <div
